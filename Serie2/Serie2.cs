@@ -67,5 +67,46 @@ namespace Martini_CSharp.Serie2{
             }
             return matrice;
         }
+        
+        public static int [][] Addition(int[][] leftMatrix, int[][] rightMatrix){
+            int[][] matrice = new int [leftMatrix.Length][];
+            for(int i = 0; i < leftMatrix.Length; i++){
+                matrice[i] = new int [leftMatrix[i].Length]; 
+                for(int j = 0; j < leftMatrix[i].Length; j++){
+                    matrice[i][j] = leftMatrix[i][j] + rightMatrix[i][j];
+                }
+            }
+            return matrice;
+
+        }
+
+        public static int [][] Substraction(int[][] leftMatrix, int[][] rightMatrix){
+            int[][] matrice = new int [leftMatrix.Length][];
+            for(int i = 0; i < leftMatrix.Length; i++){
+                matrice[i] = new int [leftMatrix[i].Length]; 
+                for(int j = 0; j < leftMatrix[i].Length; j++){
+                    matrice[i][j] = leftMatrix[i][j] - rightMatrix[i][j];
+                }
+            }
+            return matrice;
+
+        }
+
+        public static int [][] Multiplication(int[][] leftMatrix, int[][] rightMatrix){
+            int[][] matrice = new int [leftMatrix.Length][];
+            for(int i = 0; i < leftMatrix.Length; i++){
+                matrice[i] = new int [leftMatrix.Length]; 
+                for(int j = 0; j < rightMatrix[i].Length; j++){
+                    int sum = 0;
+                    for (int k = 0; k < leftMatrix.Length; k++){
+                        sum += leftMatrix[i][k] * rightMatrix[k][k];
+                    }
+                matrice[i][j] = sum;                    
+                }
+            }
+            return matrice;
+
+        }
     }
+
 }

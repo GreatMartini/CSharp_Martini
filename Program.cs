@@ -158,6 +158,50 @@ namespace Martini_CSharp
                 Console.Write("\n");
             }
 
+            int[][] matrice1 = new int [3][];
+            int[][] matrice2 = new int [3][];
+
+            matrice1[0] = [1, 2];
+            matrice1[1] = [4, 6];
+            matrice1[2] = [-1, 8];
+
+            matrice2[0] = [-1, 5];
+            matrice2[1] = [-4, 0];
+            matrice2[2] = [0, 2];
+
+
+            // Addition de matrices
+            int[][] matrice_resultante = Exercice_2.Addition(matrice1, matrice2);
+            for(int i = 0; i < matrice_resultante.Length; i++){
+                foreach(int item in matrice_resultante[i]){
+                    Console.Write(item + " ");
+                }
+                Console.Write("\n");
+            }
+
+            // Soustraction de matrices
+            matrice_resultante = Exercice_2.Substraction(matrice1, matrice2);
+            for(int i = 0; i < matrice_resultante.Length; i++){
+                foreach(int item in matrice_resultante[i]){
+                    Console.Write(item + " ");
+                }
+                Console.Write("\n");
+            }
+
+            // Multiplication de matrices:
+
+            
+            int[][] matrice3 = new int [2][];
+            matrice3[0] = [-1, 5, 0];
+            matrice3[1] = [-4, 0, 1];
+            int [][] matrice_produit = Exercice_2.Multiplication(matrice1, matrice3);
+            for(int i = 0; i < matrice_produit.Length; i++){
+                foreach(int item in matrice_produit[i]){
+                    Console.Write(item + " ");
+                }
+                Console.Write("\n");
+            }
+           
         }
 
         public static void Main()
