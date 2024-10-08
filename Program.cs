@@ -10,13 +10,11 @@ namespace Martini_CSharp
 {
     public static class Program
     { 
- 
-        public static void Main()
-        {
+        public static void Serie1(){
             int A, B;
             string entree;
             string oper;
-            /*
+            
             Console.WriteLine("Introduire le premier nombre");
             entree = Console.ReadLine();
             bool entree_A = int.TryParse(entree, out A);
@@ -90,15 +88,54 @@ namespace Martini_CSharp
             bool entree_h = int.TryParse(entree, out heure);
             Console.WriteLine(Horloge.Parle(heure));
 
-            Console.ReadKey();
-            */
+            Console.ReadKey(); 
+
             int N;
-            Console.WriteLine("Pyramide: Veuillez introduire un nombre d'etages");
+            //Console.WriteLine("Pyramide: Veuillez introduire un nombre d'etages");
             entree = Console.ReadLine();
             bool entree_N = int.TryParse(entree, out N);
-            Pyramide.Construire(N, true);
-            
-            
+            Pyramide.Construire(N, true); // true pour stillée false pour lise
+            Console.ReadKey();
+
+            // Factorielle:
+            Console.WriteLine("Factorielle: Veuillez introduire un nombre pour calculer sa factorielle");
+            entree = Console.ReadLine();
+            entree_N = int.TryParse(entree, out N);
+            Console.WriteLine(Factor.Factorial(N));
+            Console.ReadKey();
+
+            // Factorielle recursive:
+            Console.WriteLine("Factorielle recursive: Veuillez introduire un nombre pour calculer sa factorielle");
+            entree = Console.ReadLine();
+            entree_N = int.TryParse(entree, out N);
+            Console.WriteLine(Factor.Recursive_factorial(N));
+            Console.ReadKey();             
+
+            // Determination de nombre premier
+            Console.WriteLine("Nombre premier: Veuillez introduire un nombre");
+            entree = Console.ReadLine();
+            entree_N = int.TryParse(entree, out N);
+            Console.WriteLine(N_premiers.Determination(N));
+            Console.ReadKey(); 
+
+            // Affichage nombre premiers
+            Console.WriteLine("Nombre premier: Liste de 1 à 100");
+
+            N_premiers.Affiche();
+            Console.ReadKey(); 
+
+            Console.WriteLine("Algorithme D'Euclide: Insérez un nombre a:");
+            entree = Console.ReadLine();
+            entree_A = int.TryParse(entree, out A);
+            Console.WriteLine("Insérez un nombre b:");
+            entree = Console.ReadLine();
+            entree_B = int.TryParse(entree, out B);
+            Console.WriteLine(Euclide.Algorithme(A, B));
+            Console.ReadKey();         
+        }
+        public static void Main()
+        {
+            //Serie1();
         }
     }
 }
