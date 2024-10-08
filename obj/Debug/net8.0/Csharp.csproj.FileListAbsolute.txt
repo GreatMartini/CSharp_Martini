@@ -12,3 +12,4 @@
 /Users/bach/Desktop/Csharp/obj/Debug/net8.0/Csharp.pdb
 /Users/bach/Desktop/Csharp/obj/Debug/net8.0/Csharp.genruntimeconfig.cache
 /Users/bach/Desktop/Csharp/obj/Debug/net8.0/ref/Csharp.dll
+/Users/bach/Desktop/Csharp/obj/Debug/net8.0/Csharp.sourcelink.json

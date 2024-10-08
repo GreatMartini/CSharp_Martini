@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Martini_CSharp
             int A, B;
             string entree;
             string oper;
-
+            /*
             Console.WriteLine("Introduire le premier nombre");
             entree = Console.ReadLine();
             bool entree_A = int.TryParse(entree, out A);
@@ -82,6 +83,22 @@ namespace Martini_CSharp
             if (B > 0){
                 Pow.Puissance(A, B);
             }
+            int heure;
+            Console.ReadKey();
+            Console.WriteLine("Horloge parlante: Introduire un entier de 0 à 23");
+            entree = Console.ReadLine();
+            bool entree_h = int.TryParse(entree, out heure);
+            Console.WriteLine(Horloge.Parle(heure));
+
+            Console.ReadKey();
+            */
+            int N;
+            Console.WriteLine("Pyramide: Veuillez introduire un nombre d'etages");
+            entree = Console.ReadLine();
+            bool entree_N = int.TryParse(entree, out N);
+            Pyramide.Construire(N, true);
+            
+            
         }
     }
 }
