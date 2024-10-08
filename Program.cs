@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Martini_CSharp.Serie1;
+using Martini_CSharp.Serie2;
 
 namespace Martini_CSharp
 {
@@ -133,9 +134,37 @@ namespace Martini_CSharp
             Console.WriteLine(Euclide.Algorithme(A, B));
             Console.ReadKey();         
         }
+
+        public static void Serie2(){
+            Console.WriteLine("Exercice 1 recherche linéaire");
+            int[] tab1 = {1, -5 ,10, -3, 0, 4, 2, -7};
+            Console.WriteLine($"Indice de 2: {Exercice_1.LinearSearch(tab1, 2)}");
+            Console.WriteLine($"Indice de -8: {Exercice_1.LinearSearch(tab1, -8)}");
+            // Dans le pire des cas les éléments lus correspondent à la taille du tableau
+
+            Console.WriteLine("Exercice 1 recherche dichotomique");
+            Console.WriteLine($"Indice de 2: {Exercice_1.BinarySearch(tab1, 2)}");
+            Console.WriteLine($"Indice de -8: {Exercice_1.BinarySearch(tab1, -8)}");
+            // Dans le pire des cas les éléments lus seront N/2
+
+            // Exercice 2
+            int[] u = {1, 2, 3};
+            int[] v = {-1, -4, 0};
+            int[][] matrice = Exercice_2.BuildingMatrix(u, v); 
+            for(int i = 0; i < matrice.Length; i++){
+                foreach(int item in matrice[i]){
+                    Console.Write(item + " ");
+                }
+                Console.Write("\n");
+            }
+
+        }
+
         public static void Main()
         {
             //Serie1();
+            Serie2();
+
         }
     }
 }
