@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 using System.Data;
+using System.Globalization;
 
 namespace Martini_CSharp.Serie2{
     class Exercice_1{
@@ -112,4 +113,37 @@ namespace Martini_CSharp.Serie2{
         }
     }
 
+    class Exercice_3{
+        public static int[] ErastorhenesSieve(int n){
+            int nrows = n / 10;
+            int ncols = 10;
+            int max_n = (int)Math.Sqrt(n) + 1;
+            int[,] sieve = new int [nrows, ncols];
+            List <int> primes_v = new List<int>();
+
+            // Construction de la Crible et on passe au vecteur
+            for (int i = 0; i < nrows; i++){
+                for (int j = 0; j < ncols; j++){
+                    sieve[i, j] = 10*i + j + 1;
+                    primes_v.Add(10 * i + j + 1);             
+                }  
+           }
+
+            // Recherche de nombres premiers
+            for (int i = 1; i < max_n + 1; i++){
+                for (int j = i+1; j < primes_v.Count; j++){
+                    if( primes_v[j] % primes_v[i] == 0){
+                        primes_v.Remove(primes_v[j]);
+                    }
+                }
+            }
+
+            // On passe la liste au tableau
+            int[] primes = new int [primes_v.Count];                  
+            for(int i = 0; i < primes_v.Count; i++){
+                primes[i] = primes_v[i];
+            }
+            return primes;
+        }
+    }
 }

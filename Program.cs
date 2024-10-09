@@ -201,7 +201,12 @@ namespace Martini_CSharp
                 }
                 Console.Write("\n");
             }
-           
+
+            int [] primes = Exercice_3.ErastorhenesSieve(100);
+            foreach (int item in primes){
+                Console.Write(item + " ");
+            }
+
         }
 
         public static void Main()
