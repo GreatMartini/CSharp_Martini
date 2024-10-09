@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Martini_CSharp.Serie1;
 using Martini_CSharp.Serie2;
+using Martini_CSharp.Serie4;
 
 namespace Martini_CSharp
 {
@@ -138,19 +139,19 @@ namespace Martini_CSharp
         public static void Serie2(){
             Console.WriteLine("Exercice 1 recherche linéaire");
             int[] tab1 = {1, -5 ,10, -3, 0, 4, 2, -7};
-            Console.WriteLine($"Indice de 2: {Exercice_1.LinearSearch(tab1, 2)}");
-            Console.WriteLine($"Indice de -8: {Exercice_1.LinearSearch(tab1, -8)}");
+            Console.WriteLine($"Indice de 2: {Exercice_21.LinearSearch(tab1, 2)}");
+            Console.WriteLine($"Indice de -8: {Exercice_21.LinearSearch(tab1, -8)}");
             // Dans le pire des cas les éléments lus correspondent à la taille du tableau
 
             Console.WriteLine("Exercice 1 recherche dichotomique");
-            Console.WriteLine($"Indice de 2: {Exercice_1.BinarySearch(tab1, 2)}");
-            Console.WriteLine($"Indice de -8: {Exercice_1.BinarySearch(tab1, -8)}");
+            Console.WriteLine($"Indice de 2: {Exercice_21.BinarySearch(tab1, 2)}");
+            Console.WriteLine($"Indice de -8: {Exercice_21.BinarySearch(tab1, -8)}");
             // Dans le pire des cas les éléments lus seront N/2
 
             // Exercice 2
             int[] u = {1, 2, 3};
             int[] v = {-1, -4, 0};
-            int[][] matrice = Exercice_2.BuildingMatrix(u, v); 
+            int[][] matrice = Exercice_22.BuildingMatrix(u, v); 
             for(int i = 0; i < matrice.Length; i++){
                 foreach(int item in matrice[i]){
                     Console.Write(item + " ");
@@ -171,7 +172,7 @@ namespace Martini_CSharp
 
 
             // Addition de matrices
-            int[][] matrice_resultante = Exercice_2.Addition(matrice1, matrice2);
+            int[][] matrice_resultante = Exercice_22.Addition(matrice1, matrice2);
             for(int i = 0; i < matrice_resultante.Length; i++){
                 foreach(int item in matrice_resultante[i]){
                     Console.Write(item + " ");
@@ -180,7 +181,7 @@ namespace Martini_CSharp
             }
 
             // Soustraction de matrices
-            matrice_resultante = Exercice_2.Substraction(matrice1, matrice2);
+            matrice_resultante = Exercice_22.Substraction(matrice1, matrice2);
             for(int i = 0; i < matrice_resultante.Length; i++){
                 foreach(int item in matrice_resultante[i]){
                     Console.Write(item + " ");
@@ -194,7 +195,7 @@ namespace Martini_CSharp
             int[][] matrice3 = new int [2][];
             matrice3[0] = [-1, 5, 0];
             matrice3[1] = [-4, 0, 1];
-            int [][] matrice_produit = Exercice_2.Multiplication(matrice1, matrice3);
+            int [][] matrice_produit = Exercice_22.Multiplication(matrice1, matrice3);
             for(int i = 0; i < matrice_produit.Length; i++){
                 foreach(int item in matrice_produit[i]){
                     Console.Write(item + " ");
@@ -202,7 +203,7 @@ namespace Martini_CSharp
                 Console.Write("\n");
             }
 
-            int [] primes = Exercice_3.ErastorhenesSieve(100);
+            int [] primes = Exercice_23.ErastorhenesSieve(100);
             foreach (int item in primes){
                 Console.Write(item + " ");
             }
@@ -214,33 +215,37 @@ namespace Martini_CSharp
             List <string> reponses = ["1458", "1763", "1770", "1810"];
             int solution = 3;
             int weight = 3;
-            var qcm1 = new exercice_4.Qcm(question, reponses, solution, weight);
+            var qcm1 = new exercice_24.Qcm(question, reponses, solution, weight);
             
-            points += exercice_4.AskQuestion(qcm1);
+            points += exercice_24.AskQuestion(qcm1);
 
             question = " Quelle est l'année de naissance de Néron?";
             reponses = ["73 Av.C.", "21 Av.C.", "24 Ap.C.", "37 Ap.C"];
             solution = 4;
             weight = 2;
 
-            var qcm2 = new exercice_4.Qcm(question, reponses, solution, weight);
-            points += exercice_4.AskQuestion(qcm2);
+            var qcm2 = new exercice_24.Qcm(question, reponses, solution, weight);
+            points += exercice_24.AskQuestion(qcm2);
 
             question = " Quelle est l'année de naissance d'Atila'?";
             reponses = [" 0", "234.", "395", "402"];
             solution = 3;
             weight = 1;
 
-            var qcm3 = new exercice_4.Qcm(question, reponses, solution, weight);
-            points += exercice_4.AskQuestion(qcm3);
+            var qcm3 = new exercice_24.Qcm(question, reponses, solution, weight);
+            points += exercice_24.AskQuestion(qcm3);
 
             Console.Write($"Résultat du questionnaire: {points}/{total_points}");
         }
 
+        public static void Serie4(){
+
+        }
         public static void Main()
         {
             //Serie1();
-            Serie2();
+            //Serie2();
+            Serie4();
 
         }
     }

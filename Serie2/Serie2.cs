@@ -12,7 +12,7 @@ using System.Data;
 using System.Globalization;
 
 namespace Martini_CSharp.Serie2{
-    class Exercice_1{
+    class Exercice_21{
         public static int LinearSearch(int[] tableau, int valeur){
             int taille = tableau.Length;
             if (taille == 0){
@@ -56,7 +56,7 @@ namespace Martini_CSharp.Serie2{
         }
     }
 
-    class Exercice_2{
+    class Exercice_22{
         public static int [][] BuildingMatrix(int[] leftVector, int[] rightVector){
             int rang = rightVector.Length;
             int dimension = leftVector.Length;
@@ -113,7 +113,7 @@ namespace Martini_CSharp.Serie2{
         }
     }
 
-    class Exercice_3{
+    class Exercice_23{
         public static int[] ErastorhenesSieve(int n){
             int nrows = n / 10;
             int ncols = 10;
@@ -147,7 +147,7 @@ namespace Martini_CSharp.Serie2{
         }
     }
 
-    class exercice_4{
+    class exercice_24{
         public struct Qcm{
             public string question;
             public List<string> answers;
