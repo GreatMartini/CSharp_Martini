@@ -206,7 +206,35 @@ namespace Martini_CSharp
             foreach (int item in primes){
                 Console.Write(item + " ");
             }
+            
+            int points = 0;
+            int total_points = 6;
+            // 1ere question
+            string question = "Quelle est l'anée de naissance de Beethoven?";
+            List <string> reponses = ["1458", "1763", "1770", "1810"];
+            int solution = 3;
+            int weight = 3;
+            var qcm1 = new exercice_4.Qcm(question, reponses, solution, weight);
+            
+            points += exercice_4.AskQuestion(qcm1);
 
+            question = " Quelle est l'année de naissance de Néron?";
+            reponses = ["73 Av.C.", "21 Av.C.", "24 Ap.C.", "37 Ap.C"];
+            solution = 4;
+            weight = 2;
+
+            var qcm2 = new exercice_4.Qcm(question, reponses, solution, weight);
+            points += exercice_4.AskQuestion(qcm2);
+
+            question = " Quelle est l'année de naissance d'Atila'?";
+            reponses = [" 0", "234.", "395", "402"];
+            solution = 3;
+            weight = 1;
+
+            var qcm3 = new exercice_4.Qcm(question, reponses, solution, weight);
+            points += exercice_4.AskQuestion(qcm3);
+
+            Console.Write($"Résultat du questionnaire: {points}/{total_points}");
         }
 
         public static void Main()

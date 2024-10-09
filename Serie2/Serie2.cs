@@ -146,4 +146,72 @@ namespace Martini_CSharp.Serie2{
             return primes;
         }
     }
+
+    class exercice_4{
+        public struct Qcm{
+            public string question;
+            public List<string> answers;
+            
+            public int solution;
+
+            public int weight;
+        
+            public Qcm(string q, List<string> a, int s, int w){
+                question = q;
+                answers = a;
+                solution = s;
+                weight = w;
+            }
+        } 
+        // Ce choix est le meilleur choix pour avoir accès à tous les éléments par question
+        public static bool QcmValidity(Qcm qcm){
+            int n = 4; //nombre de choix
+            if ( (qcm.solution >= 1 && qcm.solution <= n) && qcm.weight > 0){
+                return true;
+            }
+            else{
+                return false;
+                throw new ArgumentException();
+            }
+        }
+
+        public static int AskQuestion(Qcm qcm){
+            int n = 4;
+            int proposition;
+            string entree;
+            Console.Write("\n");
+            Console.WriteLine(qcm.question);
+            foreach(string item in qcm.answers){
+            Console.Write($"{item} ");
+            }
+            Console.Write("\n");
+            Console.Write("Réponse:");
+            
+            entree = Console.ReadLine();
+            bool entree_prop = int.TryParse(entree, out proposition);
+            try
+                {   
+                    QcmValidity(qcm);
+                }
+            catch (ArgumentException)
+                {
+                Console.WriteLine("Qcm non conforme");
+                }
+                
+            if (proposition < 0 || proposition > n){
+                while(proposition < 0 || proposition > n){
+                    Console.WriteLine("Réponse Invalide !");
+                    Console.Write("Réponse:");            
+                    entree = Console.ReadLine();
+                    entree_prop = int.TryParse(entree, out proposition);
+                }
+            }
+            if(proposition == qcm.solution){
+                return qcm.weight;
+            }
+            else{
+                return 0;
+            }        
+        }
+    }
 }
