@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+using System.Data;
 
 namespace Martini_CSharp.Serie2{
     class Exercice_1{
@@ -94,14 +95,16 @@ namespace Martini_CSharp.Serie2{
 
         public static int [][] Multiplication(int[][] leftMatrix, int[][] rightMatrix){
             int[][] matrice = new int [leftMatrix.Length][];
-            for(int i = 0; i < leftMatrix.Length; i++){
+            int rows = leftMatrix.Length;
+            int cols = rightMatrix[0].Length;
+            for(int i = 0; i < rows; i++){
                 matrice[i] = new int [leftMatrix.Length]; 
-                for(int j = 0; j < rightMatrix[i].Length; j++){
+                for(int j = 0; j < cols; j++){
                     int sum = 0;
-                    for (int k = 0; k < leftMatrix.Length; k++){
-                        sum += leftMatrix[i][k] * rightMatrix[k][k];
+                    for (int k = 0; k < leftMatrix[i].Length; k++){
+                        sum += leftMatrix[i][k] * rightMatrix[k][j];
                     }
-                matrice[i][j] = sum;                    
+                    matrice[i][j] = sum;                    
                 }
             }
             return matrice;
