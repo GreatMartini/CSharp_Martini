@@ -108,5 +108,34 @@ namespace Martini_CSharp.Serie4{
             }
             return message_decode;
         }
+
+        public static string EfficientMorseTranslation(string code){
+            // On doit traiter les cas de lettres et de mots 
+            string code_reduit = Regex.Replace(code, @"\.{5,}", ".....");
+            //string code_reduit2 = Regex.Replace(code_reduit, @"\.\.\.\.", "...");
+            //string code_reduit3 = Regex.Replace(code_reduit2, @"\.\.", ".");
+
+            List <string> mots_morse = code_reduit.Split(".....").ToList();
+            List <string> lettres_morse;
+            string message_decode = "";
+
+            BuildMorse();
+
+            for (int i = 0; i < mots_morse.Count(); i++){
+                mots_morse[i].Replace("....","...");
+                lettres_morse = mots_morse[i].Split("...").ToList();
+                for (int j = 0; j < lettres_morse.Count(); j++){
+                    if (Regex.IsMatch(lettres_morse[j], @"[^.=]")){
+                        throw new ArgumentException("Symboles non conformes");
+                    }
+                    lettres_morse[j] = Regex.Replace(lettres_morse[j], "..", ".");
+                    lettres_morse[j] = morse.FirstOrDefault(x => x.Value == lettres_morse[j]).Key;
+                    message_decode += lettres_morse[j];
+                }
+            message_decode += " ";
+            }
+            return message_decode;
+
+        }
     }
 }
