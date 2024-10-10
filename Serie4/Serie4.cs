@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Numerics;
 using System.Data;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Martini_CSharp.Serie4{
     class Exercice_41{
@@ -97,6 +98,9 @@ namespace Martini_CSharp.Serie4{
             for (int i = 0; i < mots_morse.Count(); i++){
                 lettres_morse = mots_morse[i].Split("...").ToList();
                 for (int j = 0; j < lettres_morse.Count(); j++){
+                    if (Regex.IsMatch(lettres_morse[j], @"[^.=]")){
+                        throw new ArgumentException("Symboles non conformes");
+                    }
                     lettres_morse[j] = morse.FirstOrDefault(x => x.Value == lettres_morse[j]).Key;
                     message_decode += lettres_morse[j];
                 }

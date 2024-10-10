@@ -243,10 +243,16 @@ namespace Martini_CSharp
             string message_morse =
             "===.=.===.=...=...===.=...=.=...===.===.=.=...=.===" +
             ".....=...=.=.=.....=.===.=.=...===.===.===.....===.===...=...=.===.===.===...===.===.===...=.===.=";
-            string message_decode = Exercice_41.MorseTranslation(message_morse);
-            //for(int i = 0; i < message_decode.Length; i++){
+
+            try{
+                string message_decode = Exercice_41.MorseTranslation(message_morse);
                 Console.Write(message_decode);
-            //}
+            }
+            catch(ArgumentException ex){
+                Console.Write(ex.ToString());
+            };
+  
+
         }
         public static void Main()
         {
