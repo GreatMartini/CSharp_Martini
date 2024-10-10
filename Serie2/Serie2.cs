@@ -170,8 +170,8 @@ namespace Martini_CSharp.Serie2{
                 return true;
             }
             else{
-                return false;
                 throw new ArgumentException();
+                //return false;
             }
         }
 

@@ -239,7 +239,14 @@ namespace Martini_CSharp
         }
 
         public static void Serie4(){
-
+            // Code Morse
+            string message_morse =
+            "===.=.===.=...=...===.=...=.=...===.===.=.=...=.===" +
+            ".....=...=.=.=.....=.===.=.=...===.===.===.....===.===...=...=.===.===.===...===.===.===...=.===.=";
+            string message_decode = Exercice_41.MorseTranslation(message_morse);
+            //for(int i = 0; i < message_decode.Length; i++){
+                Console.Write(message_decode);
+            //}
         }
         public static void Main()
         {
