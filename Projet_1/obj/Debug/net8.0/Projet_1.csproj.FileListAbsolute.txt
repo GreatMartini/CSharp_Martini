@@ -1,0 +1,15 @@
+/Users/bach/Desktop/Csharp/Projet_1/bin/Debug/net8.0/Projet_1
+/Users/bach/Desktop/Csharp/Projet_1/bin/Debug/net8.0/Projet_1.deps.json
+/Users/bach/Desktop/Csharp/Projet_1/bin/Debug/net8.0/Projet_1.runtimeconfig.json
+/Users/bach/Desktop/Csharp/Projet_1/bin/Debug/net8.0/Projet_1.dll
+/Users/bach/Desktop/Csharp/Projet_1/bin/Debug/net8.0/Projet_1.pdb
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.GeneratedMSBuildEditorConfig.editorconfig
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.AssemblyInfoInputs.cache
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.AssemblyInfo.cs
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.csproj.CoreCompileInputs.cache
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.sourcelink.json
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.dll
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/refint/Projet_1.dll
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.pdb
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.genruntimeconfig.cache
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/ref/Projet_1.dll

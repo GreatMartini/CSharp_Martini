@@ -93,7 +93,7 @@ namespace Martini_CSharp.Serie4{
             List <string> lettres_morse;
             string message_decode = "";
 
-            BuildMorse();
+            //BuildMorse();
 
             for (int i = 0; i < mots_morse.Count(); i++){
                 lettres_morse = mots_morse[i].Split("...").ToList();
@@ -119,7 +119,7 @@ namespace Martini_CSharp.Serie4{
             List <string> lettres_morse;
             string message_decode = "";
 
-            BuildMorse();
+            //BuildMorse();
 
             for (int i = 0; i < mots_morse.Count(); i++){
                 mots_morse[i].Replace("....","...");
@@ -128,14 +128,30 @@ namespace Martini_CSharp.Serie4{
                     if (Regex.IsMatch(lettres_morse[j], @"[^.=]")){
                         throw new ArgumentException("Symboles non conformes");
                     }
-                    lettres_morse[j] = Regex.Replace(lettres_morse[j], "..", ".");
+                    lettres_morse[j] = Regex.Replace(lettres_morse[j], @"\.\.", ".");
                     lettres_morse[j] = morse.FirstOrDefault(x => x.Value == lettres_morse[j]).Key;
                     message_decode += lettres_morse[j];
                 }
             message_decode += " ";
             }
             return message_decode;
-
         }
+        /*public static string MorseEncryption(string sentence){
+            string message_crypte = "";
+            List <string> mots = sentence.Split(" ").ToList();
+            foreach (string item in mots){
+                
+            }
+            /* for(int i = 0; i < sentence.Length; i++){
+                if (morse.ContainsKey(sentence[i].ToString())){
+                    message_crypte += morse[sentence[i].ToString()]+ "...";
+                }
+                else if(sentence[i] == ' '){
+                    message_crypte += ' ';                   
+                }
+
+            }
+            return Regex.Replace(message_crypte ," ", ".....");
+        }*/
     }
 }

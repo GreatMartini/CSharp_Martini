@@ -243,16 +243,27 @@ namespace Martini_CSharp
             string message_morse =
             "===.=.===.=...=...===.=...=.=...===.===.=.=...=.===" +
             ".....=...=.=.=.....=.===.=.=...===.===.===.....===.===...=...=.===.===.===...===.===.===...=.===.=";
-
+            Exercice_41.BuildMorse();
             try{
                 string message_decode = Exercice_41.MorseTranslation(message_morse);
-                Console.Write(message_decode);
+                Console.WriteLine(message_decode);
             }
             catch(ArgumentException ex){
-                Console.Write(ex.ToString());
+                Console.WriteLine(ex.ToString());
             };
-  
 
+            try{
+                string message_decode = Exercice_41.EfficientMorseTranslation(message_morse);
+                Console.WriteLine(message_decode);
+            }
+            catch(ArgumentException ex){
+                Console.WriteLine(ex.ToString());
+            };
+
+            //string message_crypte = Exercice_41.MorseEncryption("Ceniza es lo mejor");
+            //Console.WriteLine(message_crypte);
+
+              
         }
         public static void Main()
         {
