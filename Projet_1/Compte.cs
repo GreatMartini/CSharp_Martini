@@ -15,11 +15,14 @@ namespace Projet_1
         // Un historique des transactions
         private uint _num_ctp;
         public decimal solde;
-        private decimal retrait_max;
+        public decimal retrait_max;
+        private decimal _cumul_operations;
+
         public Compte(uint num, decimal sol = 0, decimal rmax = 1000, params decimal[] h_transactions){
             _num_ctp = num;
             solde = sol;
             retrait_max = rmax;
+
         }
     }
 }
