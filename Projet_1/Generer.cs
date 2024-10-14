@@ -23,7 +23,7 @@ namespace Projet_1{
             using (StreamWriter w = File.CreateText("Comptes.csv")){
                 for (int i = 0; i < 20; i++){
                     r_cpt = r_cpt_aux.Next(100);
-                    r_solde = (decimal)r_solde_aux.NextDouble()*2-1;
+                    r_solde = ((decimal)r_solde_aux.NextDouble()*2-1)*100000;
                     w.WriteLine($"{r_cpt};{r_solde}");
                 }
             }
@@ -57,12 +57,20 @@ namespace Projet_1{
                 
             using (StreamWriter w = File.CreateText("Transactions.csv")){
                 for (int i = 0; i < 100; i++){
+                    Random selector_1 = new Random();                           // Nombre random qui selectionne compte pour mettre à 0
+                    Random selector_2 = new Random();                           // Meme chose pour compte destinataire
 
                     num_ind_1 = r_num_ind.Next(0,numero_compte.Count());      // On génère un indice aléatoire
                     num_ind_2 = r_num_ind.Next(0,numero_compte.Count());      // On génère un indice aléatoire
-                    num_aux = r_num_vir.Next(0,10000);                        // Genere numéro de viremen aléatoire
+                    num_aux = r_num_vir.Next(0,1000);                        // Genere numéro de viremen aléatoire
                     montant_aux = (decimal)r_montant_aux.NextDouble()*1000000;// Génère montant aléatoire
 
+                    if (selector_1.NextDouble()*15 < 1){
+                        numero_compte[num_ind_1] = 0;
+                    }
+                    if(selector_2.NextDouble()*15 < 1){
+                        numero_compte[num_ind_2] = 0;
+                    }
                     w.WriteLine($"{num_aux};{montant_aux};{numero_compte[num_ind_1]};{numero_compte[num_ind_2]}");
 
                 }

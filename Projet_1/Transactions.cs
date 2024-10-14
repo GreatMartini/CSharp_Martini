@@ -79,7 +79,7 @@ namespace Projet_1{
             if (_type == 'D'){
                 Depot();
             }
-            else if(_type == 'D'){
+            else if(_type == 'R'){
                 Retrait();
             } 
             else if(_type == 'V'){
