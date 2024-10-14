@@ -92,20 +92,5 @@ namespace Projet_1{
                 throw new ArgumentException("Type de mouvement erroné");
             }
         }
-
     }
-
-
 }
-/*
-    public class Retrait(){
-        
-    }
-    public class Virement(){
-
-    }
-    public class Prelevement(){
-
-    }
-
- */   
