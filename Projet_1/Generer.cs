@@ -63,7 +63,7 @@ namespace Projet_1{
                     num_ind_1 = r_num_ind.Next(0,numero_compte.Count());      // On génère un indice aléatoire
                     num_ind_2 = r_num_ind.Next(0,numero_compte.Count());      // On génère un indice aléatoire
                     num_aux = r_num_vir.Next(0,1000);                        // Genere numéro de viremen aléatoire
-                    montant_aux = (decimal)r_montant_aux.NextDouble()*1000000;// Génère montant aléatoire
+                    montant_aux = (decimal)r_montant_aux.NextDouble()*100;// Génère montant aléatoire
 
                     if (selector_1.NextDouble()*15 < 1){
                         numero_compte[num_ind_1] = 0;

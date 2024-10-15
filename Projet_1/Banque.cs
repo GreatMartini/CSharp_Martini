@@ -48,7 +48,7 @@ namespace Projet_1{
             List <List<string>> transactions = new List<List<string>>();
             List <string> ligne_transaction = new List<string>();
             if (File.Exists("Transactions.csv")){
-                using (StreamReader r = new StreamReader("Transaction.csv")){
+                using (StreamReader r = new StreamReader("Transactions.csv")){
                     while(!r.EndOfStream){
                         var line = r.ReadLine();
                         var values = line.Split(';');
@@ -66,7 +66,7 @@ namespace Projet_1{
 
         public void ecrire(uint code_trans, string stat){                                       // Ecrit le fichier de sortie status
             using (StreamWriter w = new StreamWriter("Status.csv", true)){
-                w.WriteLine("${code_trans};{stat}");               
+                w.WriteLine($"{code_trans};{stat}");               
             }
         }
 
