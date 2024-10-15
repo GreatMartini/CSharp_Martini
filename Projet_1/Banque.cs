@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+using System.Runtime.CompilerServices;
 //using Microsoft.Data.Analysis;
 
 
@@ -27,7 +28,10 @@ namespace Projet_1{
                         var values = line.Split(';');
                         bool code_correct = uint.TryParse(values[0], out uint code);
                         bool montant_correct = decimal.TryParse(values[1], NumberStyles.AllowDecimalPoint, CultureInfo.GetCultureInfo("en-US"), out decimal montant);
-                        if (code_correct && montant_correct){
+                        if(montant < 0){
+                            montant_correct = false;
+                        }
+                        if (code_correct && montant_correct && !comptes.ContainsKey(code)){
                             Compte compte_i = new Compte(code, montant);
                             comptes.Add(code, compte_i);
                         }
@@ -37,6 +41,7 @@ namespace Projet_1{
                     }
                     return comptes;
                 }
+
             }
             else{
                 throw new Exception("Comptes.csv non existant");
@@ -45,15 +50,17 @@ namespace Projet_1{
         }
 
         public List< List <string>> Tableau_transactions(){
-            List <List<string>> transactions = new List<List<string>>();
-            List <string> ligne_transaction = new List<string>();
+            List <List<string>> transactions = new List<List<string>>();   
             if (File.Exists("Transactions.csv")){
                 using (StreamReader r = new StreamReader("Transactions.csv")){
                     while(!r.EndOfStream){
+                        List <string> ligne_transaction = new List<string>();
                         var line = r.ReadLine();
                         var values = line.Split(';');
                         ligne_transaction.Add(values[0]);
                         ligne_transaction.Add(values[1]);
+                        ligne_transaction.Add(values[2]);
+                        ligne_transaction.Add(values[3]);
                         transactions.Add(ligne_transaction);
                     }
                 }
@@ -121,7 +128,12 @@ namespace Projet_1{
                                 if(statut == "OK"){
                                     comptes[expediteur].solde -= transaction_R.montant;
                                     comptes[expediteur].historique_transactions.Add(transaction_R.montant);
+                                    if (comptes[expediteur].historique_transactions.Count()%10 == 0){
+                                        comptes[expediteur].cumul_operations = 0;
+                                    }
+                                    else{
                                     comptes[expediteur].cumul_operations += transaction_R.montant;
+                                    }
                                 }
                             }
 
@@ -134,8 +146,12 @@ namespace Projet_1{
                                 if(statut == "OK"){
                                     comptes[expediteur].solde -= transaction_V.montant;
                                     comptes[expediteur].historique_transactions.Add(transaction_V.montant);
-                                    comptes[expediteur].cumul_operations += transaction_V.montant;
-
+                                    if (comptes[expediteur].historique_transactions.Count()%10 == 0){
+                                        comptes[expediteur].cumul_operations = 0;
+                                    }
+                                    else{
+                                        comptes[expediteur].cumul_operations += transaction_V.montant;
+                                    }
                                     comptes[destinataire].solde += transaction_V.montant;
                                 }
                             }
@@ -146,51 +162,3 @@ namespace Projet_1{
         }
     }
 }
-
-    /* 
-                            if(values[2] == "0"){
-                                // Depot
-                                Transaction transaction_D = new Transaction('D', code_aux, expediteur, destinataire, montant);
-                                statut = transaction_D.Depot();
-                                ecrire(code_aux, statut);
-                                
-                            }
-
-                            else if (values[3] == "0"){
-                                // Retrait
-                                Transaction transaction_R = new Transaction('R', code_aux, expediteur, destinataire, montant);
-                                statut = transaction_R.Depot();
-                                ecrire(code_aux, statut);
-
-
-                            }
-
-                            else{
-                                // Prélèvement et virement
-                                Transaction transaction_P = new Transaction('P', code_aux, expediteur, destinataire, montant);
-
-                                Transaction transaction_V = new Transaction('V', code_aux, expediteur, destinataire, montant);
-                                if (transaction_V.Virement() == "OK" && transaction_P.Prelevement() == "OK"){
-                                    statut = "OK";
-                                }
-                                else{
-                                    statut = "KO";
-                                }
-                                ecrire(code_aux, statut);
-
-                            }
-                        }
-
-                        else{
-                            statut = "KO";
-                            ecrire(code_aux, statut);
-                            continue;
-                        }
-                    }
-                    else{
-                        continue;
-                    }
-
-                }                    
-            }          
-*/

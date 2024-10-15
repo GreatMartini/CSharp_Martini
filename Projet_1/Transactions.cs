@@ -31,7 +31,7 @@ namespace Projet_1{
         public string Retrait(){
             // M > 0, Solde > M
             // M < Max
-            if(montant > 0 && (montant + expediteur.cumul_operations) < expediteur.retrait_max + montant && montant < expediteur.solde){
+            if(montant > 0 && (montant + expediteur.cumul_operations) <= expediteur.retrait_max && montant <= expediteur.solde){
                 return "OK";                
             }
             else{
@@ -41,7 +41,7 @@ namespace Projet_1{
 
         }
         public string Virement(){
-            if(montant > 0 && (montant + expediteur.cumul_operations) < expediteur.retrait_max + montant && montant < expediteur.solde){
+            if(montant > 0 && (montant + expediteur.cumul_operations) <= expediteur.retrait_max  && montant <= expediteur.solde){
                 return "OK";                
             }
             else{
@@ -51,7 +51,7 @@ namespace Projet_1{
 
         }
         public string Prelevement(){
-            if(montant > 0 && (montant + destinataire.cumul_operations)< destinataire.retrait_max + montant && montant < destinataire.solde){
+            if(montant > 0 && (montant + destinataire.cumul_operations) <= destinataire.retrait_max && montant <= destinataire.solde){
                 return "OK";                
             }
             else{
