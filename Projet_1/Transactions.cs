@@ -17,55 +17,50 @@ namespace Projet_1{
         uint expediteur;
         uint destinataire;
         decimal montant;
-        private void Depot(){
+        public string Depot(){
             //Compte exp = new Compte(expediteur);
-            if (montant < 0){
-                throw new ArgumentException("Montant est inférieur à 0.");
+            if (montant > 0){
+                return "OK";
+            }
+            else{
+                return "KO";
             }
             // Montant strictement positif
 
         }
-        private void Retrait(){
+        public string Retrait(){
             // M > 0, Solde > M
             // M < Max
             Compte exp = new Compte(expediteur);
-            if(montant < 0){
-                throw new ArgumentException("Montant est inférieur à 0.");                
+            if(montant > 0 && (montant + exp.cumul_operations) < exp.retrait_max + montant && montant < exp.solde){
+                return "OK";                
             }
-            else if(montant > exp.retrait_max + montant){
-                throw new ArgumentException("Montant dépasse la capacité actuelle");
-            }
-            else if(montant > exp.solde){
-                throw new ArgumentException("Le montant dépasse les ressources du compte");
+            else{
+                return "KO";
             }
 
 
         }
-        private void Virement(){
+        public string Virement(){
             Compte exp = new Compte(expediteur);
-            if(montant < 0){
-                throw new ArgumentException("Montant est inférieur à 0.");                
+            if(montant > 0 && (montant + exp.cumul_operations) < exp.retrait_max + montant && montant < exp.solde){
+                return "OK";                
             }
-            else if(montant > exp.retrait_max + montant){
-                throw new ArgumentException("Montant dépasse la capacité actuelle");
-            }
-            else if(montant > exp.solde){
-                throw new ArgumentException("Le montant dépasse les ressources du compte");
+            else{
+                return "KO";
             }
 
 
         }
-        private void Prelevement(){
-            Compte dest = new Compte(destinataire);
-            if(montant < 0){
-                throw new ArgumentException("Montant est inférieur à 0.");                
+        public string Prelevement(){
+            Compte des = new Compte(destinataire);
+            if(montant > 0 && (montant + des.cumul_operations)< des.retrait_max + montant && montant < des.solde){
+                return "OK";                
             }
-            else if(montant > dest.retrait_max + montant){
-                throw new ArgumentException("Montant dépasse la capacité actuelle");
+            else{
+                return "KO";
             }
-            else if(montant > dest.solde){
-                throw new ArgumentException("Le montant dépasse les ressources du compte");
-            }
+
 
         }
 
@@ -89,7 +84,8 @@ namespace Projet_1{
                 Prelevement();
             }  
             else{
-                throw new ArgumentException("Type de mouvement erroné");
+
+                //throw new ArgumentException("Type de mouvement erroné");
             }
         }
     }
