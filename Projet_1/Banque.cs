@@ -10,6 +10,8 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Runtime.CompilerServices;
+using System.Net;
+using System.Linq.Expressions;
 //using Microsoft.Data.Analysis;
 
 
@@ -24,14 +26,21 @@ namespace Projet_1{
             if (File.Exists("Comptes.csv")){
                 using (StreamReader r = new StreamReader("Comptes.csv")){
                     while(!r.EndOfStream){
+                        decimal montant = 0;
                         var line = r.ReadLine();
                         var values = line.Split(';');
+
                         bool code_correct = uint.TryParse(values[0], out uint code);
-                        bool montant_correct = decimal.TryParse(values[1], NumberStyles.AllowDecimalPoint, CultureInfo.GetCultureInfo("en-US"), out decimal montant);
-                        if(montant < 0){
-                            montant_correct = false;
+                        bool montant_correct = decimal.TryParse(values[1], NumberStyles.AllowDecimalPoint, CultureInfo.GetCultureInfo("en-US"), out montant);
+                        if(values[1]==""){
+                            montant_correct = true;
                         }
-                        if (code_correct && montant_correct && !comptes.ContainsKey(code)){
+                        bool montant_positif = false;
+                        if(montant >= 0){
+                            montant_positif = true;
+                        }
+
+                        if (code_correct && montant_positif && montant_correct && !comptes.ContainsKey(code)){
                             Compte compte_i = new Compte(code, montant);
                             comptes.Add(code, compte_i);
                         }
@@ -84,12 +93,12 @@ namespace Projet_1{
             Dictionary <uint, Compte> comptes = Tableau_comptes();
             List< List <string>> transactions = Tableau_transactions();
             string statut;                                                  // Garde le statut de la transaction
-
+            List <uint> transactions_passees = new List<uint>();
 
             // On regarde si il y des comptes non-existants    
             for (int i = 0; i < transactions.Count(); i++){
                     List <string> ligne_transaction = transactions[i];      // Lignes de transactions
-                    List <uint> transactions_passees = new List<uint>();
+
 
                     bool code_correct = uint.TryParse(ligne_transaction[0], out uint code_aux);
                     bool expediteur_correct = uint.TryParse(ligne_transaction[2], out uint expediteur);
@@ -97,67 +106,94 @@ namespace Projet_1{
                     bool montant_correct = decimal.TryParse(ligne_transaction [1], NumberStyles.AllowDecimalPoint, CultureInfo.GetCultureInfo("en-US"), out decimal montant);
 
 
-                    if (comptes.ContainsKey(expediteur) == false || comptes.ContainsKey(destinataire) == false || destinataire_correct == false || expediteur_correct == false || montant_correct == false){
+                    if (destinataire_correct == false || expediteur_correct == false || montant_correct == false){
                         statut = "KO";
                         if (code_correct){
-                            ecrire(code_aux,statut);      
+                            ecrire(code_aux,statut);
+                            continue;      
                         }
                         else{
                             continue;
                         }            
                     }
+                    else{ 
 
-                    else{
-                        if(!transactions_passees.Contains(code_aux)){
+                        if(transactions_passees.Contains(code_aux) == false){
                             transactions_passees.Add(code_aux);
+
                             if (expediteur != destinataire){
                                 if(expediteur == 0){
-                                // Depot
-                                Transaction transaction_D = new Transaction('D', code_aux, comptes[expediteur], comptes[destinataire], montant);
-                                statut = transaction_D.Depot();
-                                ecrire(code_aux, statut);
-                                if (statut == "OK"){
-                                    comptes[destinataire].solde += transaction_D.montant;                                     
-                                }
-                            }
-                            else if (destinataire == 0){
-                                // Retrait
-                                Transaction transaction_R = new Transaction('R', code_aux, comptes[expediteur], comptes[destinataire], montant);
-                                statut = transaction_R.Retrait();
-                                ecrire(code_aux, statut);
-                                if(statut == "OK"){
-                                    comptes[expediteur].solde -= transaction_R.montant;
-                                    comptes[expediteur].historique_transactions.Add(transaction_R.montant);
-                                    if (comptes[expediteur].historique_transactions.Count()%10 == 0){
-                                        comptes[expediteur].cumul_operations = 0;
+                                    // Depot
+                                    if(comptes.ContainsKey(destinataire)){
+                                        Transaction transaction_D = new Transaction('D', code_aux, comptes[destinataire], comptes[destinataire], montant);
+                                        statut = transaction_D.Depot();
+                                        if (statut == "OK"){
+                                            comptes[destinataire].solde += transaction_D.montant;                                     
+                                        }
                                     }
                                     else{
-                                    comptes[expediteur].cumul_operations += transaction_R.montant;
+                                        statut = "KO";
                                     }
+                                    //ecrire(code_aux, statut);
                                 }
-                            }
+                                else if (destinataire == 0){
+                                    // Retrait
+                                    if(comptes.ContainsKey(expediteur)){
+                                        Transaction transaction_R = new Transaction('R', code_aux, comptes[expediteur], comptes[expediteur], montant);
+                                        statut = transaction_R.Retrait();
+                                        if(statut == "OK"){
+                                            comptes[expediteur].solde -= transaction_R.montant;
+                                            comptes[expediteur].historique_transactions.Add(transaction_R.montant);
+                                            if (comptes[expediteur].historique_transactions.Count()%10 == 0){
+                                                comptes[expediteur].cumul_operations = 0;
+                                            }
+                                            else{
+                                            comptes[expediteur].cumul_operations += transaction_R.montant;
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        statut = "KO";
+                                    }
+                                    //ecrire(code_aux, statut);
 
-                            else{
-                                // Prélèvement et virement
-                                //Transaction transaction_P = new Transaction('P', code_aux, comptes[expediteur], comptes[destinataire], montant);
-                                Transaction transaction_V = new Transaction('V', code_aux, comptes[expediteur], comptes[destinataire], montant);
-                                statut = transaction_V.Virement();
-                                ecrire(code_aux, statut);
-                                if(statut == "OK"){
-                                    comptes[expediteur].solde -= transaction_V.montant;
-                                    comptes[expediteur].historique_transactions.Add(transaction_V.montant);
-                                    if (comptes[expediteur].historique_transactions.Count()%10 == 0){
-                                        comptes[expediteur].cumul_operations = 0;
+                                }
+
+                                else{
+
+                                    if(comptes.ContainsKey(expediteur) && comptes.ContainsKey(destinataire)){
+                                        Transaction transaction_V = new Transaction('V', code_aux, comptes[expediteur], comptes[destinataire], montant);
+                                        statut = transaction_V.Virement();
+
+                                        if(statut == "OK"){
+                                            comptes[expediteur].solde -= transaction_V.montant;
+                                            comptes[expediteur].historique_transactions.Add(transaction_V.montant);
+                                            if (comptes[expediteur].historique_transactions.Count()%10 == 0){
+                                                comptes[expediteur].cumul_operations = 0;
+                                            }
+                                            else{
+                                                comptes[expediteur].cumul_operations += transaction_V.montant;
+                                            }
+                                            comptes[destinataire].solde += transaction_V.montant;
+                                        }
+                                        
                                     }
                                     else{
-                                        comptes[expediteur].cumul_operations += transaction_V.montant;
+                                        statut = "KO";
                                     }
-                                    comptes[destinataire].solde += transaction_V.montant;
                                 }
                             }
+                            else{
+                                statut = "KO";   
+                            }                            
+                          
                         }
+                        else{
+                            statut = "KO";
+                        }
+                        ecrire(code_aux, statut); 
                     }                  
-                }                   
+                                   
             }
         }
     }
