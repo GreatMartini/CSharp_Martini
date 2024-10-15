@@ -21,8 +21,8 @@ namespace Projet_1
                 Genere.Genere_transactions();
             }
             else if(entree == "TT")
-            {
-
+            {   Banque banque = new Banque(); 
+                banque.Traite_transactions();
             }
         }
     }

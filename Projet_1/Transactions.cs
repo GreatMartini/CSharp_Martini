@@ -14,9 +14,9 @@ namespace Projet_1{
     public class Transaction{
         private char _type; 
         private uint _num;
-        uint expediteur;
-        uint destinataire;
-        decimal montant;
+        Compte expediteur;
+        Compte destinataire;
+        public decimal montant;
         public string Depot(){
             //Compte exp = new Compte(expediteur);
             if (montant > 0){
@@ -31,8 +31,7 @@ namespace Projet_1{
         public string Retrait(){
             // M > 0, Solde > M
             // M < Max
-            Compte exp = new Compte(expediteur);
-            if(montant > 0 && (montant + exp.cumul_operations) < exp.retrait_max + montant && montant < exp.solde){
+            if(montant > 0 && (montant + expediteur.cumul_operations) < expediteur.retrait_max + montant && montant < expediteur.solde){
                 return "OK";                
             }
             else{
@@ -42,8 +41,7 @@ namespace Projet_1{
 
         }
         public string Virement(){
-            Compte exp = new Compte(expediteur);
-            if(montant > 0 && (montant + exp.cumul_operations) < exp.retrait_max + montant && montant < exp.solde){
+            if(montant > 0 && (montant + expediteur.cumul_operations) < expediteur.retrait_max + montant && montant < expediteur.solde){
                 return "OK";                
             }
             else{
@@ -53,8 +51,7 @@ namespace Projet_1{
 
         }
         public string Prelevement(){
-            Compte des = new Compte(destinataire);
-            if(montant > 0 && (montant + des.cumul_operations)< des.retrait_max + montant && montant < des.solde){
+            if(montant > 0 && (montant + destinataire.cumul_operations)< destinataire.retrait_max + montant && montant < destinataire.solde){
                 return "OK";                
             }
             else{
@@ -64,7 +61,7 @@ namespace Projet_1{
 
         }
 
-        public Transaction(char type, uint numero, uint exped, uint destin, decimal mont){
+        public Transaction(char type, uint numero, Compte exped, Compte destin, decimal mont){
             _num = numero;
             expediteur = exped;
             destinataire = destin;
