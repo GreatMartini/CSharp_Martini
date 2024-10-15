@@ -18,11 +18,12 @@ namespace Projet_1
         public decimal retrait_max;
         public decimal cumul_operations;
 
-        public Compte(uint num, decimal sol = 0, decimal rmax = 1000, params decimal[] h_transactions){
+        public List <decimal> historique_transactions = new List<decimal>();
+
+        public Compte(uint num, decimal sol = 0, decimal rmax = 1000){
             _num_ctp = num;
             solde = sol;
             retrait_max = rmax;
-
         }
     }
 }

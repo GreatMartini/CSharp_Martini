@@ -13,3 +13,8 @@
 /Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.pdb
 /Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.genruntimeconfig.cache
 /Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/ref/Projet_1.dll
+/Users/bach/Desktop/Csharp/Projet_1/bin/Debug/net8.0/Apache.Arrow.dll
+/Users/bach/Desktop/Csharp/Projet_1/bin/Debug/net8.0/Microsoft.Data.Analysis.dll
+/Users/bach/Desktop/Csharp/Projet_1/bin/Debug/net8.0/Microsoft.ML.DataView.dll
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.csproj.AssemblyReference.cache
+/Users/bach/Desktop/Csharp/Projet_1/obj/Debug/net8.0/Projet_1.csproj.Up2Date
