@@ -10,10 +10,12 @@ namespace Projet_2
     public static class Program{
         public static void Main(){
             //Genere.Genere_comptes();
+            //Genere.Genere_gestionnaires();
             //Genere.Genere_transactions();
-
-            Banque banque = new Banque(); 
-            banque.Traite_transactions();
+            Charge tableau = new Charge();
+            tableau.Tableau_comptes();
+            //Banque banque = new Banque(); 
+            //banque.Traite_transactions();
             
         }
     }
