@@ -16,9 +16,6 @@ using System.Linq.Expressions;
 
 
 namespace Projet_2{
-    //public class Tableaux{
-
-    //}
 
     public class Banque{
         /*
