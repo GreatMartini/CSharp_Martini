@@ -12,8 +12,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Runtime.CompilerServices;
 using System.Net;
 using System.Linq.Expressions;
-using Deedle;
-//using Microsoft.Data.Analysis;
+
 
 
 namespace Projet_2{
@@ -89,34 +88,15 @@ namespace Projet_2{
         }
         */
         public void Traite_transactions(){
-            /*
-            var comptes_raw = Frame.ReadCsv("Comptes.csv", false, true, 2, "Column1",";");
-            var comptes_index = new[] {"ID","Date","Solde","Entree","Sortie"};
-            var comptes = comptes_raw.IndexColumnsWith(comptes_index);
+            
+            Charge chargement = new Charge();
+            Dictionary <uint, Compte> comptes = chargement.Tableau_comptes();
+            Dictionary <uint, Gestionnaire> Gestionnaires = chargement.Tableau_gestionnaires();
+            List< List <string>> transactions = chargement.Tableau_transactions();
 
-            //var comptes = comptes_1.IndexRows<int>("ID");
-            var gestionnaires_raw = Frame.ReadCsv("Gestionnaires.csv", false, true, 2, "Column1",";");
-            var gestionnaires_index = new[] {"ID","Type","Transactions"};
-            var gestionnaires = gestionnaires_raw.IndexColumnsWith(gestionnaires_index);
 
-            var transactions_raw = Frame.ReadCsv("Transactions.csv", false, true, 2, "Column1",";");
-            var transaction_index = new[] {"ID","Date","Montant","Expediteur","Destinataire"};
-            var transactions = transactions_raw.IndexColumnsWith(transaction_index);
-
-            //Manque voir si la date est parsable
-            comptes.ReplaceColumn("Date",comptes.GetColumn<string>("Date")
-            .Select(kvp => DateTime.ParseExact(kvp.Value, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None)));
-            comptes.DropSparseRows();
-            comptes.IndexRows<int>("ID");
-            comptes.SortRows("Date").Print();
-
-            //gestionnaires.Print();
-            //transactions.Print();
 /*
             // Declaration des variables pre-traitement
-            List <uint> codes_transaction = new List <uint>();              // Liste de codes pour tester le fichier
-            Dictionary <uint, Compte> comptes = Tableau_comptes();
-            List< List <string>> transactions = Tableau_transactions();
             string statut;                                                  // Garde le statut de la transaction
             List <uint> transactions_passees = new List<uint>();
 
