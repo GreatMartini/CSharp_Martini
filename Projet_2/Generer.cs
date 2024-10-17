@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Formats.Asn1;
-using Microsoft.Data.Analysis;
 // Programme qui génère les fichiers test d'entrée
 
 namespace Projet_2{

@@ -87,9 +87,11 @@ namespace Projet_2{
         public void Traite_transactions(){
             
             Charge chargement = new Charge();
-            Dictionary <uint, Compte> comptes = chargement.Tableau_comptes();
+            
             Dictionary <uint, Gestionnaire> Gestionnaires = chargement.Tableau_gestionnaires();
-            List< List <string>> transactions = chargement.Tableau_transactions();
+
+            List <List <string>> comptes = chargement.Tableau_comptes();
+            List <List <string>> transactions = chargement.Tableau_transactions();
 
 
 /*

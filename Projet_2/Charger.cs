@@ -12,11 +12,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Runtime.CompilerServices;
 using System.Net;
 using System.Linq.Expressions;
-using Deedle;
 
 namespace Projet_2{
     public class Charge{
 
+/*
         public Dictionary <uint, Compte> Tableau_comptes(){
             
             Dictionary <uint, Compte> comptes = new Dictionary<uint, Compte>();
@@ -84,8 +84,31 @@ namespace Projet_2{
             else{
                 throw new Exception("Comptes.csv non existant");
                 }
-        }
+        }*/
         
+        public List< List <string>> Tableau_comptes(){
+            List <List<string>> comptes = new List<List<string>>();   
+            if (File.Exists("Comptes.csv")){
+                using (StreamReader r = new StreamReader("Comptes.csv")){
+                    while(!r.EndOfStream){
+                        List <string> ligne_compte = new List<string>();
+                        var line = r.ReadLine();
+                        var values = line.Split(';');
+                        ligne_compte.Add(values[0]);
+                        ligne_compte.Add(values[1]);
+                        ligne_compte.Add(values[2]);
+                        ligne_compte.Add(values[3]);
+                        ligne_compte.Add(values[4]);
+                        ligne_compte.Add("OK");
+                        comptes.Add(ligne_compte);
+                    }
+                }
+            return comptes;
+            }
+            else{
+                throw new Exception("Comptes.csv non existant");
+            }
+        }
         public List< List <string>> Tableau_transactions(){
             List <List<string>> transactions = new List<List<string>>();   
             if (File.Exists("Transactions.csv")){
@@ -99,6 +122,7 @@ namespace Projet_2{
                         ligne_transaction.Add(values[2]);
                         ligne_transaction.Add(values[3]);
                         ligne_transaction.Add(values[4]);
+                        ligne_transaction.Add("OK");
                         transactions.Add(ligne_transaction);
                     }
                 }

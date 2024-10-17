@@ -14,6 +14,8 @@ namespace Projet_2
         public string type;
         public uint transactions;
 
+        public Dictionary <uint, Compte> comptes;
+
 
         public Gestionnaire(uint num, string t, uint trans){
             _num_gest = num;
