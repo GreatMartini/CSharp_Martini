@@ -11,7 +11,7 @@ namespace Projet_2
         public static void Main(){
             
             Banque banque = new Banque();
-            banque.Traite_transactions();
+            banque.Traitement();
 
             //Banque banque = new Banque(); 
             //banque.Traite_transactions();

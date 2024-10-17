@@ -16,7 +16,7 @@ using System.Linq.Expressions;
 namespace Projet_2{
     public class Charge{
 
-
+        // Cree des comptes sur des dictionnaires dans les gestionnairess à partir de listes de listes
         public Dictionary <uint, Compte> Tableau_comptes_crees(List<List <string>> tab_comptes){
             
             Dictionary <uint, Compte> comptes = new Dictionary<uint, Compte>();

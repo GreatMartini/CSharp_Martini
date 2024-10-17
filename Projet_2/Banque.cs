@@ -20,8 +20,8 @@ namespace Projet_2{
 
     public class Banque{
 
+        // Fonction quir crée les comptes dans les gestionnaires et met à KO opérations mal effectuées
         public void Cree_comptes_gestionnaires(Dictionary <uint, Gestionnaire> gestionnaires, List <List <string>> comptes){
-            ////////////////////   Création de dictionnaire de comptes créés    /////////////////
             // On itere sur chaque élément du dictionnaire des gestionnaires
             Charge chargement = new Charge();
             foreach(var element in gestionnaires){
@@ -50,8 +50,35 @@ namespace Projet_2{
             }
         }
 
+        // Fonction qui gère les opérations entre gestionnaires et met à KO les mauvaises opérations
+        public void Gere_operations_comptes(Dictionary <uint, Gestionnaire> gestionnaires, List <List <string>> comptes){
+            Charge chargement = new Charge();
+            List<List <string>> comptes_aux = new List<List<string>>();                      // On crée un tableau auxiliaire qui contiendra les valeurs dans la liste ou gestionnaire de creation correspondra au dictionnaire de gestionnaires
+            foreach (List <string> ligne in comptes){                                        // On itère sur chaque élement de la liste comptes
+                bool code_correct = uint.TryParse(ligne[0], out uint code);
+                bool entree_correcte = uint.TryParse(ligne[3], out uint entree);             // On regarde si l'entrée peut être bien parsée
+                bool sortie_correcte = uint.TryParse(ligne[4], out uint sortie);             // On regarde si la sortie peut être bien parsée
+                bool date_correcte = DateTime.TryParseExact(ligne[1],"dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date);
 
-        public void Traite_transactions(){
+                // Si l'entrée n'est pas correcte ou qu'elle n'est pas contenue parmis les gestionnaires, l'opération est fausse
+                if(!entree_correcte || !gestionnaires.ContainsKey(entree) || !sortie_correcte || !gestionnaires.ContainsKey(sortie) || !code_correct || !date_correcte){                    
+                    ligne[5] = "KO";
+                    continue;
+                }
+                else{
+                    if(gestionnaires[entree].comptes.ContainsKey(code) && date >  gestionnaires[entree].comptes[code].date){
+                        gestionnaires[sortie].comptes.Add(code, gestionnaires[entree].comptes[code]);
+                        gestionnaires[entree].comptes.Remove(code);
+                    }
+                    else{
+                        ligne[5] = "KO";
+                        continue;
+                    }
+                }
+            }              
+        }
+
+        public void Traitement(){
             
             Charge chargement = new Charge();
 
@@ -64,6 +91,17 @@ namespace Projet_2{
 
             // On rajoute les comptes créés dans les dictionnaires des gestionnaires
             Cree_comptes_gestionnaires(gestionnaires, comptes);
+            Gere_operations_comptes (gestionnaires, comptes);
+
+
+            
+            foreach(var element in gestionnaires){
+                Console.WriteLine($"{element.Key}:");
+                foreach(var compte in element.Value.comptes){
+                    Console.WriteLine(compte.Key);
+                }
+            }
+            
 
         }
     }
