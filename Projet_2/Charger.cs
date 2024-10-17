@@ -16,76 +16,65 @@ using System.Linq.Expressions;
 namespace Projet_2{
     public class Charge{
 
-/*
-        public Dictionary <uint, Compte> Tableau_comptes(){
+
+        public Dictionary <uint, Compte> Tableau_comptes_crees(List<List <string>> tab_comptes){
             
             Dictionary <uint, Compte> comptes = new Dictionary<uint, Compte>();
-            if (File.Exists("Comptes.csv")){
-                using (StreamReader r = new StreamReader("Comptes.csv")){
-                    while(!r.EndOfStream){
-
-                        decimal solde = 0;
-                        var line = r.ReadLine();
-                        var values = line.Split(';');
-                        uint entree = 0;
-                        uint sortie = 0;
-                        // On fait les parse
-                        bool code_correct = uint.TryParse(values[0], out uint code);
-                        bool date_correcte = DateTime.TryParseExact(values[1],"dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date);
-                        bool solde_correct = decimal.TryParse(values[2], NumberStyles.AllowDecimalPoint, CultureInfo.GetCultureInfo("en-US"), out solde);
-                        
-                        // Bool pour l'entrée
-                        bool entree_correcte = false;
-                        if(values[3] == ""){
-                            //entree_correcte = uint.TryParse(values[3], out entree);
-                            entree_correcte = true;
-                            //entree = 0;
-                        }
-                        else{
-                            entree_correcte = uint.TryParse(values[3], out entree);
-                        }
-
-                        // Bool pour la sortie
-                        bool sortie_correcte = false;
-                        if(values[4] == ""){
-                            //sortie_correcte = uint.TryParse(values[4], out uint sortie);
-                            sortie_correcte = true;
-                            //sortie = 0;
-                        }
-                        else{
-                            sortie_correcte = uint.TryParse(values[4], out sortie);
-                        }
-                        
-                        // Bool pour solde positif
-                        bool solde_positif = false;
-
-                        if(solde >= 0){
-                            solde_positif = true;
-                        }
-
-                        // Si le solde est vide on continue
-                        if(values[2] == ""){
-                            solde_correct = true;
-                        }                        
-
-                        if (code_correct && date_correcte && solde_positif && solde_correct && entree_correcte && sortie_correcte && !comptes.ContainsKey(code)){
-                            Compte compte_i = new Compte(code, date, entree, sortie, solde);
-                            comptes.Add(code, compte_i);
-                        }
-                        else{
-                            continue;
-                        }  
-                    }
-                    return comptes;
+            decimal solde = 0;
+            foreach(List<string> element in tab_comptes){    
+                //var values = element.Split(';');
+                uint entree = 0;
+                uint sortie = 0;
+                // On fait les parse
+                bool code_correct = uint.TryParse(element[0], out uint code);
+                bool date_correcte = DateTime.TryParseExact(element[1],"dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date);
+                bool solde_correct = decimal.TryParse(element[2], NumberStyles.AllowDecimalPoint, CultureInfo.GetCultureInfo("en-US"), out solde);
+                
+                // Bool pour l'entrée
+                bool entree_correcte = false;
+                if(element[3] == ""){
+                    //entree_correcte = uint.TryParse(values[3], out entree);
+                    entree_correcte = true;
+                    //entree = 0;
+                }
+                else{
+                    entree_correcte = uint.TryParse(element[3], out entree);
                 }
 
+                // Bool pour la sortie
+                bool sortie_correcte = false;
+                if(element[4] == ""){
+                    //sortie_correcte = uint.TryParse(values[4], out uint sortie);
+                    sortie_correcte = true;
+                    //sortie = 0;
+                }
+                else{
+                    sortie_correcte = uint.TryParse(element[4], out sortie);
+                }
+                
+                // Bool pour solde positif
+                bool solde_positif = false;
 
+                if(solde >= 0){
+                    solde_positif = true;
+                }
+
+                // Si le solde est vide on continue
+                if(element[2] == ""){
+                    solde_correct = true;
+                }                        
+
+                if (code_correct && date_correcte && solde_positif && solde_correct && entree_correcte && sortie_correcte && !comptes.ContainsKey(code)){
+                    Compte compte_i = new Compte(code, date, entree, sortie, solde);
+                    comptes.Add(code, compte_i);
+                }
+
+                else{
+                    continue;
+                }  
             }
-            else{
-                throw new Exception("Comptes.csv non existant");
-                }
-        }*/
-        
+            return comptes;
+        }        
         public List< List <string>> Tableau_comptes(){
             List <List<string>> comptes = new List<List<string>>();   
             if (File.Exists("Comptes.csv")){
@@ -131,8 +120,7 @@ namespace Projet_2{
             else{
                 throw new Exception("Transactions.csv non existant");
             }
-        }
-    
+        }    
         public Dictionary <uint, Gestionnaire> Tableau_gestionnaires(){
             
             Dictionary <uint, Gestionnaire> gestionnaires = new Dictionary<uint, Gestionnaire>();

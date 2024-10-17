@@ -18,80 +18,61 @@ using System.Linq.Expressions;
 namespace Projet_2{
 
     public class Banque{
+
+        // Fonction qui crée les comptes à créer dans chaque gestionnaire (dictionnaire de gestionnaires) 
         /*
-        public Dictionary <uint, Compte> Tableau_comptes(){
-            Dictionary <uint, Compte> comptes = new Dictionary<uint, Compte>();
-            if (File.Exists("Comptes.csv")){
-                using (StreamReader r = new StreamReader("Comptes.csv")){
-                    while(!r.EndOfStream){
-                        decimal montant = 0;
-                        var line = r.ReadLine();
-                        var values = line.Split(';');
+        public  Dictionary <uint, Gestionnaire> Creation_comptes(){
+            Charge chargement = new Charge();
 
-                        bool code_correct = uint.TryParse(values[0], out uint code);
-                        bool montant_correct = decimal.TryParse(values[1], NumberStyles.AllowDecimalPoint, CultureInfo.GetCultureInfo("en-US"), out montant);
-                        if(values[1]==""){
-                            montant_correct = true;
-                        }
-                        bool montant_positif = false;
-                        if(montant >= 0){
-                            montant_positif = true;
-                        }
+            // On charge les fichiers de gestionnaires et de comptes
+            Dictionary <uint, Gestionnaire> Gestionnaires = chargement.Tableau_gestionnaires();
+            List <List <string>> comptes = chargement.Tableau_comptes();
 
-                        if (code_correct && montant_positif && montant_correct && !comptes.ContainsKey(code)){
-                            Compte compte_i = new Compte(code, montant);
-                            comptes.Add(code, compte_i);
-                        }
-                        else{
-                            continue;
-                        }  
-                    }
-                    return comptes;
-                }
+            foreach (List <string> ligne in comptes){
+                if()
 
-            }
-            else{
-                throw new Exception("Comptes.csv non existant");
-                }
+            } 
 
-        }
 
-        public List< List <string>> Tableau_transactions(){
-            List <List<string>> transactions = new List<List<string>>();   
-            if (File.Exists("Transactions.csv")){
-                using (StreamReader r = new StreamReader("Transactions.csv")){
-                    while(!r.EndOfStream){
-                        List <string> ligne_transaction = new List<string>();
-                        var line = r.ReadLine();
-                        var values = line.Split(';');
-                        ligne_transaction.Add(values[0]);
-                        ligne_transaction.Add(values[1]);
-                        ligne_transaction.Add(values[2]);
-                        ligne_transaction.Add(values[3]);
-                        transactions.Add(ligne_transaction);
-                    }
-                }
-            return transactions;
-            }
-            else{
-                throw new Exception("Transactions.csv non existant");
-            }
-        }
+            return Gestionnaires;
+        }*/
 
-        public void ecrire(uint code_trans, string stat){                                       // Ecrit le fichier de sortie status
-            using (StreamWriter w = new StreamWriter("Status.csv", true)){
-                w.WriteLine($"{code_trans};{stat}");               
-            }
-        }
-        */
         public void Traite_transactions(){
             
             Charge chargement = new Charge();
-            
-            Dictionary <uint, Gestionnaire> Gestionnaires = chargement.Tableau_gestionnaires();
 
+            // On charge les gestionnaires dans le dictionnaire de gestionnaires
+            Dictionary <uint, Gestionnaire> gestionnaires = chargement.Tableau_gestionnaires();
+
+            // On crée des listes avec le fichier comptes et le fichier
             List <List <string>> comptes = chargement.Tableau_comptes();
             List <List <string>> transactions = chargement.Tableau_transactions();
+
+            ////////////////////   Création de dictionnaire de comptes créés    /////////////////
+            // On itere sur chaque élément du dictionnaire des gestionnaires
+            foreach(var element in gestionnaires){
+                Charge charment = new Charge();
+                List<List <string>> comptes_aux = new List<List<string>>();                      // On crée un tableau auxiliaire qui contiendra les valeurs dans la liste ou gestionnaire de creation correspondra au dictionnaire de gestionnaires
+                foreach (List <string> ligne in comptes){                                       // On itère sur chaque élement de la liste comptes
+                    bool entree_correcte = uint.TryParse(ligne[3], out uint entree);            // On regarde si l'entrée peut être bien parsée
+
+                    // Si l'entrée n'est pas correcte ou qu'elle n'est pas contenue parmis les gestionnaires, l'opération est fausse
+                    if(!entree_correcte || !gestionnaires.ContainsKey(entree)){                    
+                        ligne[5] = "KO";
+                        continue;
+                    }  
+
+                    else if (entree == element.Key && ligne[4] == ""){ //S'il s'agit d'une création est que l'entrée correspond au gestionnaire en question
+                        comptes_aux.Add(ligne);                        // On enregistre ligne dans le tableau auxiliaire
+                    }
+
+                    else{                                               // Tout autre cas on continue
+                        continue;
+                    }                                    
+                }
+                // On rajoute le dictionnaire de comptes créés dans chaque gestionnaires
+                gestionnaires[element.Key].comptes = chargement.Tableau_comptes_crees(comptes_aux);
+            }
 
 
 /*
