@@ -17,41 +17,15 @@ using System.Linq.Expressions;
 
 namespace Projet_2{
 
+
     public class Banque{
 
-        // Fonction qui crée les comptes à créer dans chaque gestionnaire (dictionnaire de gestionnaires) 
-        /*
-        public  Dictionary <uint, Gestionnaire> Creation_comptes(){
-            Charge chargement = new Charge();
-
-            // On charge les fichiers de gestionnaires et de comptes
-            Dictionary <uint, Gestionnaire> Gestionnaires = chargement.Tableau_gestionnaires();
-            List <List <string>> comptes = chargement.Tableau_comptes();
-
-            foreach (List <string> ligne in comptes){
-                if()
-
-            } 
-
-
-            return Gestionnaires;
-        }*/
-
-        public void Traite_transactions(){
-            
-            Charge chargement = new Charge();
-
-            // On charge les gestionnaires dans le dictionnaire de gestionnaires
-            Dictionary <uint, Gestionnaire> gestionnaires = chargement.Tableau_gestionnaires();
-
-            // On crée des listes avec le fichier comptes et le fichier
-            List <List <string>> comptes = chargement.Tableau_comptes();
-            List <List <string>> transactions = chargement.Tableau_transactions();
-
+        public void Cree_comptes_gestionnaires(Dictionary <uint, Gestionnaire> gestionnaires, List <List <string>> comptes){
             ////////////////////   Création de dictionnaire de comptes créés    /////////////////
             // On itere sur chaque élément du dictionnaire des gestionnaires
+            Charge chargement = new Charge();
             foreach(var element in gestionnaires){
-                Charge charment = new Charge();
+
                 List<List <string>> comptes_aux = new List<List<string>>();                      // On crée un tableau auxiliaire qui contiendra les valeurs dans la liste ou gestionnaire de creation correspondra au dictionnaire de gestionnaires
                 foreach (List <string> ligne in comptes){                                       // On itère sur chaque élement de la liste comptes
                     bool entree_correcte = uint.TryParse(ligne[3], out uint entree);            // On regarde si l'entrée peut être bien parsée
@@ -71,10 +45,29 @@ namespace Projet_2{
                     }                                    
                 }
                 // On rajoute le dictionnaire de comptes créés dans chaque gestionnaires
+            
                 gestionnaires[element.Key].comptes = chargement.Tableau_comptes_crees(comptes_aux);
             }
+        }
 
 
+        public void Traite_transactions(){
+            
+            Charge chargement = new Charge();
+
+            //On charge les gestionnaires dans le dictionnaire de gestionnaires
+            Dictionary <uint, Gestionnaire> gestionnaires = chargement.Tableau_gestionnaires();
+
+            // On crée des listes avec le fichier comptes et le fichier
+            List <List <string>> comptes = chargement.Tableau_comptes();
+            List <List <string>> transactions = chargement.Tableau_transactions();
+
+            // On rajoute les comptes créés dans les dictionnaires des gestionnaires
+            Cree_comptes_gestionnaires(gestionnaires, comptes);
+
+        }
+    }
+}    
 /*
             // Declaration des variables pre-traitement
             string statut;                                                  // Garde le statut de la transaction
@@ -180,7 +173,4 @@ namespace Projet_2{
                     }                  
                                    
             }*/
-        }
-
-    }
-}
+        
