@@ -24,12 +24,19 @@ namespace Projet_2{
         public void Cree_comptes_gestionnaires(Dictionary <uint, Gestionnaire> gestionnaires, List <List <string>> comptes){
             // On itere sur chaque élément du dictionnaire des gestionnaires
             Charge chargement = new Charge();
-            foreach(var element in gestionnaires){
 
+            foreach(var element in gestionnaires){
+                List <string> comptes_deja_existants = new List<string>();
                 List<List <string>> comptes_aux = new List<List<string>>();                      // On crée un tableau auxiliaire qui contiendra les valeurs dans la liste ou gestionnaire de creation correspondra au dictionnaire de gestionnaires
                 foreach (List <string> ligne in comptes){                                       // On itère sur chaque élement de la liste comptes
                     bool entree_correcte = uint.TryParse(ligne[3], out uint entree);            // On regarde si l'entrée peut être bien parsée
-
+                    if (comptes_deja_existants.Contains(ligne[0])){
+                        ligne[5] = "KO";
+                        continue;
+                    }
+                    else{
+                        comptes_deja_existants.Add(ligne[0]);
+                    }                    
                     // Si l'entrée n'est pas correcte ou qu'elle n'est pas contenue parmis les gestionnaires, l'opération est fausse
                     if(!entree_correcte || !gestionnaires.ContainsKey(entree)){                    
                         ligne[5] = "KO";
@@ -45,7 +52,6 @@ namespace Projet_2{
                     }                                    
                 }
                 // On rajoute le dictionnaire de comptes créés dans chaque gestionnaires
-            
                 gestionnaires[element.Key].comptes = chargement.Tableau_comptes_crees(comptes_aux);
             }
         }
@@ -53,12 +59,21 @@ namespace Projet_2{
         // Fonction qui gère les opérations entre gestionnaires et met à KO les mauvaises opérations
         public void Gere_operations_comptes(Dictionary <uint, Gestionnaire> gestionnaires, List <List <string>> comptes){
             Charge chargement = new Charge();
+            List <string> comptes_deja_existants = new List<string>();
+
             List<List <string>> comptes_aux = new List<List<string>>();                      // On crée un tableau auxiliaire qui contiendra les valeurs dans la liste ou gestionnaire de creation correspondra au dictionnaire de gestionnaires
             foreach (List <string> ligne in comptes){                                        // On itère sur chaque élement de la liste comptes
                 bool code_correct = uint.TryParse(ligne[0], out uint code);
                 bool entree_correcte = uint.TryParse(ligne[3], out uint entree);             // On regarde si l'entrée peut être bien parsée
                 bool sortie_correcte = uint.TryParse(ligne[4], out uint sortie);             // On regarde si la sortie peut être bien parsée
                 bool date_correcte = DateTime.TryParseExact(ligne[1],"dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date);
+                if (comptes_deja_existants.Contains(ligne[0])){
+                    ligne[5] = "KO";
+                    continue;
+                }
+                else{
+                    comptes_deja_existants.Add(ligne[0]);
+                }  
 
                 // Si l'entrée n'est pas correcte ou qu'elle n'est pas contenue parmis les gestionnaires, l'opération est fausse
                 if(!entree_correcte || !gestionnaires.ContainsKey(entree) || !sortie_correcte || !gestionnaires.ContainsKey(sortie) || !code_correct || !date_correcte){                    
@@ -78,10 +93,49 @@ namespace Projet_2{
             }              
         }
 
+        // Fonction qui cloture les comptes par gestionnaires et met a KO les mauvaises opération
+        public void Cloture_comptes_gestionnaires(Dictionary <uint, Gestionnaire> gestionnaires, List <List <string>> comptes){
+           Charge chargement = new Charge();
+
+            foreach(var element in gestionnaires){
+                List <string> comptes_deja_clotures = new List<string>();
+                List<List <string>> comptes_aux = new List<List<string>>();                      // On crée un tableau auxiliaire qui contiendra les valeurs dans la liste ou gestionnaire de creation correspondra au dictionnaire de gestionnaires
+                foreach (List <string> ligne in comptes){                                       // On itère sur chaque élement de la liste comptes
+                bool code_correct = uint.TryParse(ligne[0], out uint code);
+                bool entree_correcte = uint.TryParse(ligne[3], out uint entree);             // On regarde si l'entrée peut être bien parsée
+                bool sortie_correcte = uint.TryParse(ligne[4], out uint sortie);             // On regarde si la sortie peut être bien parsée
+                bool date_correcte = DateTime.TryParseExact(ligne[1],"dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date);                   
+                if (comptes_deja_clotures.Contains(ligne[0])){
+                        ligne[5] = "KO";
+                        continue;
+                    }
+                    else{
+                        comptes_deja_clotures.Add(ligne[0]);
+                    }                    
+                    // Si l'entrée n'est pas correcte ou qu'elle n'est pas contenue parmis les gestionnaires, l'opération est fausse
+                    if(!sortie_correcte || !gestionnaires.ContainsKey(sortie)){                    
+                        ligne[5] = "KO";
+                        continue;
+                    }  
+
+                    else if (sortie == element.Key && ligne[3] == ""){ //S'il s'agit d'une suppression est que l'entrée correspond au gestionnaire en question
+                        if(gestionnaires[sortie].comptes.ContainsKey(code) && date >  gestionnaires[sortie].comptes[code].date){
+                            gestionnaires[sortie].comptes.Remove(code);
+                        }
+                        else{
+                            ligne[5] = "KO";
+                            continue;
+                        }                     // On enregistre ligne dans le tableau auxiliaire
+                    }
+                       
+                }
+            }
+        }
+
         public void Traitement(){
             
             Charge chargement = new Charge();
-
+            Scribe scribe = new Scribe();
             //On charge les gestionnaires dans le dictionnaire de gestionnaires
             Dictionary <uint, Gestionnaire> gestionnaires = chargement.Tableau_gestionnaires();
 
@@ -92,15 +146,21 @@ namespace Projet_2{
             // On rajoute les comptes créés dans les dictionnaires des gestionnaires
             Cree_comptes_gestionnaires(gestionnaires, comptes);
             Gere_operations_comptes (gestionnaires, comptes);
+            Cloture_comptes_gestionnaires(gestionnaires, comptes);
+
+            foreach(List<string> ligne in comptes){
+                scribe.Ecrit_statut_comptes(ligne[0], ligne[1], ligne[2], ligne[3], ligne[4], ligne[5]);
+            }
 
 
-            
+            /*
             foreach(var element in gestionnaires){
                 Console.WriteLine($"{element.Key}:");
                 foreach(var compte in element.Value.comptes){
                     Console.WriteLine(compte.Key);
                 }
             }
+            */
             
 
         }

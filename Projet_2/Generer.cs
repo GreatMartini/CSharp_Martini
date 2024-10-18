@@ -14,7 +14,7 @@ using System.Formats.Asn1;
 namespace Projet_2{
     class Genere{
 
-        public static void Genere_comptes(){
+        public void Genere_comptes(){
             // Declare des randoms pour creer fichier
             Random r_ID = new Random();
             Random r_date = new Random();
@@ -28,10 +28,10 @@ namespace Projet_2{
             decimal solde;
 
             using (StreamWriter w = File.CreateText("Comptes.csv")){
-                for (int i = 0; i < 30; i++){
+                for (int i = 0; i < 100; i++){
                     ID = r_ID.Next(100);                                // Crée un nouveau num compte
                     date_m = r_date.Next(1,13);                         // Crée un nouveau mois aléatoirement
-                    date_a = r_date.Next(1582, 2024);                   // Crée une nouvelle année dans le calendrier grégorien
+                    date_a = r_date.Next(2000, 2024);                   // Crée une nouvelle année dans le calendrier grégorien
                     if(date_m == 1 || date_m == 3 || date_m == 5 || date_m == 7 || date_m == 8 || date_m == 10 || date_m == 12){
                         date_j = r_date.Next(1,32);
                     }
@@ -46,12 +46,12 @@ namespace Projet_2{
                     else{
                         date_j = r_date.Next(1,31);
                     }   
-                    
+                                    
                     DateTime date = new DateTime(date_a, date_m, date_j);
 
-                    solde = ((decimal)r_solde.NextDouble()*2-1)*1000;   // Crée un solde négatif ou positif
-                    entree = r_entree.Next(0,5);
-                    sortie = r_sortie.Next(0,5);
+                    solde = ((decimal)r_solde.NextDouble()/*2-1*/)*1000;   // Crée un solde négatif ou positif
+                    entree = r_entree.Next(0,6);
+                    sortie = r_sortie.Next(0,6);
 
                     if (entree == 0 && sortie == 0){
                         w.WriteLine($"{ID};{date.ToString("dd/MM/yyyy")};{solde};;"); 
@@ -71,7 +71,7 @@ namespace Projet_2{
         }
 
         // On genere le fichier gestionnaires
-        public static void Genere_gestionnaires(){
+        public void Genere_gestionnaires(){
             Random r_type = new Random();
             Random r_transactions = new Random();
 
@@ -80,7 +80,7 @@ namespace Projet_2{
             string stype;
             using (StreamWriter w = File.CreateText("Gestionnaires.csv")){
 
-                for (int i = 1; i < 5; i++){
+                for (int i = 1; i < 6; i++){
                     ID = i;                                         // Crée un nouveau num compte
                     type = r_type.NextDouble();
                                                                     // Crée le type aleatoirement
@@ -96,7 +96,7 @@ namespace Projet_2{
                 }
             }
         }
-        public static void Genere_transactions(){
+        public void Genere_transactions(){
             // Pour transactions
             Random r_type_aux = new Random();                   // Type de la transaction
             Random r_num_ind = new Random();                    // Indice pour les numeros de compte
@@ -129,7 +129,7 @@ namespace Projet_2{
             using (StreamWriter w = File.CreateText("Transactions.csv")){
                 for (int i = 0; i < 100; i++){
                     date_m = r_date.Next(1,13);                         // Crée un nouveau mois aléatoirement
-                    date_a = r_date.Next(1582, 2024);                   // Crée une nouvelle année dans le calendrier grégorien
+                    date_a = r_date.Next(2000, 2024);                   // Crée une nouvelle année dans le calendrier grégorien
                     if(date_m == 1 || date_m == 3 || date_m == 5 || date_m == 7 || date_m == 8 || date_m == 10 || date_m == 12){
                         date_j = r_date.Next(1,32);
                     }

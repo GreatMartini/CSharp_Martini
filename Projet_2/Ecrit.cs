@@ -15,12 +15,12 @@ using System.Linq.Expressions;
 
 namespace Projet_2{
     public class Scribe{
-        public void Ecrit_statut_comptes(uint code, DateTime date, decimal solde, uint entree, uint sortie, string status){                                       // Ecrit le fichier de sortie status
+        public void Ecrit_statut_comptes(string code, string date, string solde, string entree, string sortie, string status){                                       // Ecrit le fichier de sortie status
             using (StreamWriter w = new StreamWriter("Status_comptes.csv", true)){
                 w.WriteLine($"{code};{date};{solde};{entree};{sortie};{status}");               
             }
         }
-        
+
         public void Ecrit_statut_transactions(uint code, DateTime date, decimal montant, uint expediteur, uint destinataire, string status){                                       // Ecrit le fichier de sortie status
             using (StreamWriter w = new StreamWriter("Status_transactions.csv", true)){
                 w.WriteLine($"{code};{date};{montant};{expediteur};{destinataire};{status}");               
