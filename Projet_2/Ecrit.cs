@@ -21,7 +21,7 @@ namespace Projet_2{
             }
         }
 
-        public void Ecrit_statut_transactions(uint code, DateTime date, decimal montant, uint expediteur, uint destinataire, string status){                                       // Ecrit le fichier de sortie status
+        public void Ecrit_statut_transactions(string code, string date, string montant, string expediteur, string destinataire, string status){                                       // Ecrit le fichier de sortie status
             using (StreamWriter w = new StreamWriter("Status_transactions.csv", true)){
                 w.WriteLine($"{code};{date};{montant};{expediteur};{destinataire};{status}");               
             }
